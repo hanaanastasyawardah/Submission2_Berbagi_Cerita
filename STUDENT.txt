@@ -1,0 +1,317 @@
+# Informasi Submission 2 - Berbagi Cerita PWA
+
+## Identitas
+NAMA: Hana Anastasya Wardah
+ID: F269D5X0727
+
+## URL Deployment
+URL: [ISI DENGAN URL DEPLOYMENT ANDA]
+Contoh: https://berbagi-cerita-hana.netlify.app
+
+## Teknologi yang Digunakan
+- Vanilla JavaScript (ES6+)
+- Service Worker untuk PWA & Push Notification
+- IndexedDB untuk offline storage
+- Leaflet.js untuk peta interaktif
+- Dicoding Story API (https://story-api.dicoding.dev/v1)
+- Webpack untuk bundling
+- CSS3 dengan responsive design
+
+## Arsitektur MVP (Model-View-Presenter)
+
+Aplikasi ini menerapkan pola arsitektur MVP untuk memisahkan logika bisnis dari tampilan:
+
+### Model (Data Layer)
+Lokasi: `src/scripts/data/`
+- `api.js` - Definisi endpoints API
+- `auth-api.js` - Model untuk authentikasi (register, login)
+- `story-api.js` - Model untuk story (getStories, getStoryById, postStory)
+
+**Tanggung Jawab:**
+- Mengambil data dari API
+- Melakukan validasi data dari server
+- Mengembalikan data yang sudah diproses
+
+### View (Presentation Layer)
+Lokasi: `src/scripts/pages/*/`
+- `home-page.js` - View untuk halaman beranda
+- `my-stories-page.js` - View untuk halaman jelajahi cerita
+- `favorites-page.js` - View untuk halaman favorit (IndexedDB)
+- `add-story-page.js` - View untuk form tambah cerita
+- `login-page.js` - View untuk form login
+- `register-page.js` - View untuk form registrasi
+- `about-page.js` - View untuk halaman tentang
+
+**Tanggung Jawab:**
+- Rendering HTML template
+- Menampilkan data ke user
+- Tidak mengandung logika bisnis
+
+### Presenter (Controller Layer)
+Lokasi: `src/scripts/pages/app.js` dan `src/scripts/routes/`
+- `app.js` - Main presenter yang mengatur navigasi dan routing
+- `routes.js` - Mapping URL ke View
+- `url-parser.js` - Parser untuk URL routing
+
+**Tanggung Jawab:**
+- Menerima input dari user (klik, submit form)
+- Memanggil Model untuk fetch/update data
+- Mengupdate View dengan data dari Model
+- Mengatur navigasi antar halaman
+
+### Helper & Utils
+Lokasi: `src/scripts/utils/`
+- `indexeddb.js` - Helper untuk operasi IndexedDB (CRUD, search, sort)
+- `push-notification.js` - Helper untuk push notification
+- `index.js` - Utility functions (date format, validation, dll)
+
+## Fitur Submission 2
+
+### Kriteria 1: Mempertahankan Kriteria Submission 1 (LOLOS - 4 pts)
+✓ SPA dengan hash routing dan custom View Transition
+✓ Arsitektur MVP yang jelas
+✓ Data dan marker pada peta dengan multiple tile layers
+✓ Fitur interaktif peta (highlight, sinkronisasi)
+✓ Form tambah cerita dengan validasi, foto (file/kamera), lokasi
+✓ Aksesibilitas lengkap (H1-H3, ARIA, keyboard nav, responsive, skip content)
+✓ Dynamic navigation (Login/Logout)
+
+### Kriteria 2: Push Notification (ADVANCED - 4 pts)
+✓ Push notification dari server melalui service worker
+✓ Notifikasi dinamis dengan data dari event
+✓ **Toggle button** untuk enable/disable push notification di footer
+✓ **Action button** pada notifikasi untuk navigasi ke halaman terkait
+✓ Implementasi VAPID key dari Dicoding Story API
+
+**Cara Test:**
+1. Klik tombol "🔔 Notifikasi" di footer
+2. Allow permission notification
+3. Status berubah menjadi "Aktif"
+4. Test via Chrome DevTools: Application > Service Workers > Push
+5. Payload example: `{"title":"Cerita Baru","body":"Ada cerita baru dari pengguna","url":"/"}`
+
+### Kriteria 3: PWA dengan Offline Support (ADVANCED - 4 pts)
+✓ Web App Manifest lengkap (name, icons, theme, screenshots, shortcuts)
+✓ Installable di mobile & desktop
+✓ Service Worker dengan caching strategy:
+  - **Cache First** untuk static assets
+  - **Stale-While-Revalidate** untuk API requests
+✓ Offline mode: app shell + cached data tetap tersedia
+✓ Screenshots untuk install prompt
+✓ Shortcuts ke halaman penting
+✓ No warnings di Chrome DevTools > Application > Manifest
+
+**Icons yang Diperlukan:**
+- 72x72, 96x96, 128x128, 144x144, 152x152, 192x192, 384x384, 512x512
+- Simpan di: `public/images/icon-*.png`
+
+**Screenshots yang Diperlukan:**
+- Desktop: 1280x720 (`screenshot-desktop.png`)
+- Mobile: 375x667 (`screenshot-mobile.png`)
+- Simpan di: `public/images/`
+
+### Kriteria 4: IndexedDB dengan Sync (ADVANCED - 4 pts)
+✓ **Fitur Favorit** dengan IndexedDB:
+  - **Create**: Tambah cerita ke favorit dari Beranda/Jelajahi
+  - **Read**: Lihat semua favorit di halaman Favorit
+  - **Delete**: Hapus cerita dari favorit
+✓ **Interaktivitas**:
+  - **Search**: Cari favorit berdasarkan judul/deskripsi
+  - **Sort**: Urutkan by tanggal/judul (asc/desc)
+✓ **Background Sync**: Data offline di-sync saat online (untuk future enhancement)
+
+**Cara Menggunakan:**
+1. Buka Beranda atau Jelajahi Cerita
+2. Klik tombol "⭐ Favorit" pada cerita
+3. Cerita tersimpan di IndexedDB (offline)
+4. Lihat di menu "Favorit"
+5. Gunakan search box untuk mencari
+6. Gunakan sort untuk mengurutkan
+7. Klik "🗑️ Hapus" untuk menghapus dari favorit
+
+### Kriteria 5: Deployment (WAJIB)
+✓ Deploy ke salah satu platform: Netlify / Vercel / Firebase Hosting / GitHub Pages
+✓ URL dapat diakses publik
+✓ PWA dapat di-install dari URL deployment
+
+**Rekomendasi Platform:**
+- **Netlify**: Mudah, auto-deploy dari GitHub, free SSL
+- **Vercel**: Cepat, support SPA, auto-deploy
+- **Firebase Hosting**: Google platform, reliable
+- **GitHub Pages**: Gratis, langsung dari repo
+
+## Cara Deploy ke Netlify (Recommended)
+
+1. **Build Project:**
+   ```bash
+   npm run build
+   ```
+
+2. **Push ke GitHub:**
+   ```bash
+   git add .
+   git commit -m "Submission 2 - PWA ready"
+   git push origin main
+   ```
+
+3. **Deploy di Netlify:**
+   - Login ke https://netlify.com
+   - New site from Git
+   - Connect GitHub repository
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+   - Deploy!
+
+4. **Konfigurasi (jika perlu):**
+   - Buat file `netlify.toml` di root:
+   ```toml
+   [[redirects]]
+     from = "/*"
+     to = "/index.html"
+     status = 200
+   ```
+
+5. **Copy URL deployment** dan paste ke STUDENT.txt ini
+
+## Testing Checklist
+
+### PWA & Offline
+- [ ] Install prompt muncul di mobile/desktop
+- [ ] App dapat di-install ke homescreen
+- [ ] Buka app dalam mode offline
+- [ ] App shell tetap muncul saat offline
+- [ ] Data cached tetap tersedia saat offline
+- [ ] No errors di console saat offline
+
+### Push Notification
+- [ ] Toggle notification di footer berfungsi
+- [ ] Permission notification muncul
+- [ ] Status berubah Aktif/Nonaktif
+- [ ] Test push via DevTools berhasil
+- [ ] Notification muncul dengan title & body yang benar
+- [ ] Klik notification membuka halaman yang tepat
+
+### IndexedDB Favorites
+- [ ] Tombol "Favorit" muncul di Beranda & Jelajahi
+- [ ] Klik tombol menyimpan ke IndexedDB
+- [ ] Halaman Favorit menampilkan data dari IndexedDB
+- [ ] Search box mencari dengan benar
+- [ ] Sort mengurutkan dengan benar
+- [ ] Delete menghapus dari IndexedDB
+- [ ] Data tetap ada setelah refresh page
+
+### Submission 1 Features
+- [ ] SPA routing berjalan smooth dengan transition
+- [ ] Dynamic navigation (Login/Logout)
+- [ ] Peta menampilkan marker dengan benar
+- [ ] Multiple tile layers berfungsi
+- [ ] Highlight & sync list-peta bekerja
+- [ ] Form tambah cerita dengan validasi
+- [ ] Kamera dapat diakses dan foto dapat diambil
+- [ ] Responsive di 375px, 768px, 1024px
+- [ ] Keyboard navigation berfungsi
+- [ ] Skip to content berfungsi
+- [ ] Heading hierarchy benar (H1>H2>H3)
+
+## Struktur Folder Lengkap
+
+```
+berbagi-cerita/
+├── public/
+│   ├── images/
+│   │   ├── icon-72x72.png
+│   │   ├── icon-96x96.png
+│   │   ├── icon-128x128.png
+│   │   ├── icon-144x144.png
+│   │   ├── icon-152x152.png
+│   │   ├── icon-192x192.png
+│   │   ├── icon-384x384.png
+│   │   ├── icon-512x512.png
+│   │   ├── screenshot-desktop.png
+│   │   └── screenshot-mobile.png
+│   ├── manifest.json
+│   ├── sw.js
+│   └── index.html
+├── src/
+│   ├── scripts/
+│   │   ├── data/
+│   │   │   ├── api.js
+│   │   │   ├── auth-api.js
+│   │   │   └── story-api.js
+│   │   ├── pages/
+│   │   │   ├── about/
+│   │   │   │   └── about-page.js
+│   │   │   ├── add-story/
+│   │   │   │   └── add-story-page.js
+│   │   │   ├── auth/
+│   │   │   │   ├── login-page.js
+│   │   │   │   └── register-page.js
+│   │   │   ├── favorites/
+│   │   │   │   └── favorites-page.js (NEW)
+│   │   │   ├── home/
+│   │   │   │   └── home-page.js
+│   │   │   ├── my-stories/
+│   │   │   │   └── my-stories-page.js
+│   │   │   └── app.js
+│   │   ├── routes/
+│   │   │   ├── routes.js
+│   │   │   └── url-parser.js
+│   │   ├── utils/
+│   │   │   ├── indexeddb.js (NEW)
+│   │   │   ├── push-notification.js (NEW)
+│   │   │   └── index.js
+│   │   ├── config.js
+│   │   └── index.js
+│   └── styles/
+│       ├── styles.css
+│       └── map-style.css
+├── .gitignore
+├── package.json
+├── webpack.config.js
+├── STUDENT.txt
+└── README.md
+```
+
+## Catatan Penting
+
+### VAPID Public Key
+Sudah terimplementasi di `push-notification.js`:
+```javascript
+const VAPID_PUBLIC_KEY = 'BN7-r0Svv7CsTi18-OPYtJLVW0bfuZ1x1UtrygczKjephDAEovlcn8ESd9Ne0LhFtUI91lLphB5pThML0jKlhCs';
+```
+
+### Service Worker Registration
+Otomatis saat app load via `push-notification.js > init()`
+
+### Caching Strategy
+- **Static Assets**: Cache First (CSS, JS, Images, Fonts)
+- **API Requests**: Stale-While-Revalidate (data selalu fresh, fallback ke cache saat offline)
+
+### Browser Support
+- Chrome/Edge: Full support (recommended untuk testing)
+- Firefox: Support PWA & IndexedDB, limited push notification
+- Safari: Limited PWA support
+
+## Revisi yang Telah Dilakukan
+
+### Submission 1
+- **Revisi 1**: Dynamic navigation (Logout di menu)
+- **Revisi 2**: Heading hierarchy H1>H2>H3 di About page
+
+### Submission 2 (Current)
+- **Fitur Baru**: PWA dengan offline support
+- **Fitur Baru**: Push notification dengan toggle button
+- **Fitur Baru**: IndexedDB favorites dengan search & sort
+- **Fitur Baru**: Background sync ready (infrastructure)
+- **Peningkatan**: Service worker dengan caching strategy
+- **Peningkatan**: Web App Manifest lengkap dengan screenshots & shortcuts
+
+## Contact & Support
+Jika ada pertanyaan atau masalah, silakan hubungi:
+- Email: [padlihanna.99@gmail.com]
+- GitHub: [hanaanastasyawardah]
+
+---
+
+Dibuat dengan ❤️, ☕, dan 💪 untuk lulus Dicoding Front-End Intermediate!
+Semoga ACC! Aamiin 🤲

@@ -1,0 +1,80 @@
+/* Style untuk peta dan komponen map */
+
+#map {
+  height: 500px;
+  width: 100%;
+  border-radius: 12px;
+  border: 2px solid var(--pink);
+}
+
+.mini-map {
+  height: 300px;
+  width: 100%;
+  border-radius: 12px;
+  border: 2px solid var(--pink);
+  margin-top: 0.5rem;
+}
+
+/* Custom Marker Style */
+.custom-marker {
+  background: transparent;
+  border: none;
+}
+
+/* Leaflet Popup Customization */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.2);
+}
+
+.leaflet-popup-content {
+  margin: 12px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Layer Control Customization */
+.leaflet-control-layers {
+  border-radius: 8px;
+  border: 2px solid var(--pink);
+}
+
+.leaflet-control-layers-toggle {
+  background-image: none;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leaflet-control-layers-toggle::before {
+  content: '🗺️';
+  font-size: 20px;
+}
+
+/* Responsive Map */
+@media (max-width: 768px) {
+  #map {
+    height: 400px;
+  }
+
+  .mini-map {
+    height: 250px;
+  }
+}
+
+@media (max-width: 375px) {
+  #map {
+    height: 300px;
+  }
+
+  .mini-map {
+    height: 200px;
+  }
+}
+
+@media (min-width: 1024px) {
+  #map {
+    height: 600px;
+  }
+}

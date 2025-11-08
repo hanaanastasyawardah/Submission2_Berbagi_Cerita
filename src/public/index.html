@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Berbagi Cerita - Aplikasi untuk berbagi cerita dengan foto dan lokasi" />
+    <meta name="theme-color" content="#ffc1cc" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Berbagi Cerita" />
+    
+    <title>Berbagi Cerita - Bagikan Pengalaman Anda</title>
+
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/icon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/images/icon-192x192.png" />
+    <link rel="shortcut icon" href="/images/icon-72x72.png" />
+
+    <!-- Fonts & External CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+          crossorigin="" />
+  </head>
+  <body>
+    <!-- KRITERIA 4 ADVANCE: Skip to Content -->
+    <a href="#main-content" class="skip-link">Langsung ke konten utama</a>
+
+    <header>
+      <div class="main-header container">
+        <a class="brand-name" href="#/" aria-label="Berbagi Cerita - Halaman Utama">Berbagi Cerita</a>
+
+        <nav id="navigation-drawer" class="navigation-drawer" aria-label="Navigasi utama">
+          <ul id="nav-list" class="nav-list" role="menubar">
+            <li role="none"><a href="#/" role="menuitem">Beranda</a></li>
+            <li role="none"><a href="#/my-stories" role="menuitem">Jelajahi Cerita</a></li>
+            <li role="none"><a href="#/favorites" role="menuitem">Favorit</a></li>
+            <li role="none"><a href="#/add-story" role="menuitem">Tambah Cerita</a></li>
+            <li role="none"><a href="#/login" role="menuitem">Login</a></li>
+            <li role="none"><a href="#/register" role="menuitem">Daftar</a></li>
+            <li role="none"><a href="#/about" role="menuitem">Tentang</a></li>
+          </ul>
+        </nav>
+
+        <button id="drawer-button" class="drawer-button" aria-controls="navigation-drawer" aria-expanded="false" aria-label="Menu navigasi">☰</button>
+      </div>
+    </header>
+
+    <main id="main-content" class="main-content" role="main"></main>
+
+    <footer role="contentinfo">
+      <p>&copy; 2025 Berbagi Cerita. Dibuat dengan ❤️</p>
+      <div class="footer-actions">
+        <button id="notification-toggle" class="notification-toggle" aria-label="Toggle notifikasi">
+          🔔 <span id="notification-status">Loading...</span>
+        </button>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+            crossorigin=""></script>
+  </body>
+</html>
