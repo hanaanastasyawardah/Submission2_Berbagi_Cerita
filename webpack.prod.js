@@ -38,4 +38,9 @@ module.exports = merge(common, {
       filename: '[name].css',
     }),
   ],
+  performance: {
+    hints: 'warning', // Tetap tampilkan warning, tapi naikkan limit
+    maxAssetSize: 512000, // Naikkan limit aset menjadi 500 KiB (dari 244 KiB)
+    maxEntrypointSize: 512000, // Naikkan limit entry point menjadi 500 KiB
+  },
 });

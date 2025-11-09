@@ -6,6 +6,8 @@ const API_CACHE = 'api-cache-v1';
 const urlsToCache = [
   '/',
   '/index.html',
+  '/app.bundle.js', 
+  '/app.css',       
   '/manifest.json',
   '/images/icon-192x192.png',
   '/images/icon-512x512.png',
@@ -48,16 +50,6 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
-  if (url.origin === self.location.origin) {
-    
-    if (request.url.includes('/ws') || request.url.includes('.hot-update.')) {
-      return; 
-    }
-    
-    if (request.url.includes('/app.bundle.js') || request.destination === 'document') {
-      return; 
-    }
-  }
 
   // API Requests - Stale-While-Revalidate
   if (url.origin === 'https://story-api.dicoding.dev') {
