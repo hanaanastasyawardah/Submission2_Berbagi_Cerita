@@ -48,6 +48,16 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
+  if (url.origin === self.location.origin) {
+    
+    if (request.url.includes('/ws') || request.url.includes('.hot-update.')) {
+      return; 
+    }
+    
+    if (request.url.includes('/app.bundle.js') || request.destination === 'document') {
+      return; 
+    }
+  }
 
   // API Requests - Stale-While-Revalidate
   if (url.origin === 'https://story-api.dicoding.dev') {
@@ -135,21 +145,32 @@ self.addEventListener('push', (event) => {
         ]
       };
     } catch (e) {
-      console.error('Error parsing push data:', e);
+      console.warn('Push data bukan JSON, menggunakan sebagai teks biasa.');
+      notificationData = {
+        title: 'Berbagi Cerita (Test)',
+        body: event.data.text() || 'Ini adalah notifikasi tes.',
+        icon: '/images/icon-192x192.png',
+        badge: '/images/icon-72x72.png',
+        data: { url: '/' },
+        actions: [
+          { action: 'open', title: 'Buka' },
+          { action: 'close', title: 'Tutup' }
+        ]
+      }
     }
   }
 
-  event.waitUntil(
-    self.registration.showNotification(notificationData.title, {
-      body: notificationData.body,
-      icon: notificationData.icon,
-      badge: notificationData.badge,
-      data: notificationData.data,
-      actions: notificationData.actions,
-      vibrate: [200, 100, 200],
-      tag: 'story-notification'
-    })
-  );
+  const promiseChain = self.registration.showNotification(notificationData.title, {
+    body: notificationData.body,
+    icon: notificationData.icon,
+    badge: notificationData.badge,
+    data: notificationData.data,
+    actions: notificationData.actions,
+    vibrate: [200, 100, 200],
+    tag: 'story-notification'
+  });
+
+  event.waitUntil(promiseChain);
 });
 
 // Notification Click

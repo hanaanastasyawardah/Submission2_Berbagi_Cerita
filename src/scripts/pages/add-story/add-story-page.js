@@ -1,4 +1,5 @@
 import { postStory } from '../../data/story-api';
+import PushNotificationHelper from '../../utils/push-notification';
 
 export default class AddStoryPage {
   constructor() {
@@ -316,6 +317,7 @@ export default class AddStoryPage {
         msg.textContent = '✓ Cerita berhasil dikirim! Redirecting...';
         msg.style.background = '#e8f5e9';
         msg.style.borderColor = '#4caf50';
+        this._showLocalNotification(name);
         
         form.reset();
         document.getElementById('preview').style.display = 'none';
@@ -341,6 +343,21 @@ export default class AddStoryPage {
         msg.style.borderColor = '#d32f2f';
       }
     });
+  }
+  
+_showLocalNotification(storyTitle) {
+    if (PushNotificationHelper.getPermission() === 'granted') {
+      const title = 'Cerita Berhasil Dikirim!';
+      const options = {
+        body: `Cerita Anda "${storyTitle}" telah berhasil dipublikasikan.`,
+        icon: '/images/icon-192x192.png',
+        badge: '/images/icon-72x72.png',
+        data: {
+          url: '#/my-stories' 
+        }
+      };
+      PushNotificationHelper.sendTestNotification(title, options);
+    }
   }
 
   _validateForm() {

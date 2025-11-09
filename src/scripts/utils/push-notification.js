@@ -248,7 +248,7 @@ class PushNotificationHelper {
   }
 
   // Send test notification (for development)
-  async sendTestNotification() {
+  async sendTestNotification(customTitle = 'Test Notification', customOptions = {}) {
     if (!this.isSupported()) {
       throw new Error('Notification tidak didukung');
     }
@@ -259,8 +259,8 @@ class PushNotificationHelper {
       throw new Error('Permission notification belum diberikan');
     }
 
-    // This is a local notification, not from server
-    const options = {
+    // Opsi default
+    const defaultOptions = {
       body: 'Ini adalah test notifikasi dari Berbagi Cerita',
       icon: '/images/icon-192x192.png',
       badge: '/images/icon-72x72.png',
@@ -270,10 +270,14 @@ class PushNotificationHelper {
       }
     };
 
+    // Gabungkan opsi default dengan customOptions yang dikirim
+    const options = { ...defaultOptions, ...customOptions };
+
     if (this.registration) {
-      await this.registration.showNotification('Test Notification', options);
+      // Gunakan customTitle dan options yang sudah digabung
+      await this.registration.showNotification(customTitle, options);
     } else {
-      new Notification('Test Notification', options);
+      new Notification(customTitle, options);
     }
   }
 
