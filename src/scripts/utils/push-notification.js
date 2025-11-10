@@ -113,7 +113,11 @@ class PushNotificationHelper {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          subscription: subscription
+            endpoint: subscription.endpoint, 
+            keys: {
+                auth: subscription.keys.auth,
+                p256dh: subscription.keys.p256dh,
+            }
         })
       });
 
